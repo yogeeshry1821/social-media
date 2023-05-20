@@ -57,6 +57,7 @@ const Form = () => {
 
   const register = async (values, onSubmitProps) => {
     // this allows us to send form info with image
+    console.log('lol')
     const formData = new FormData();
     for (let value in values) {
       formData.append(value, values[value]);
@@ -93,11 +94,12 @@ const Form = () => {
           token: loggedIn.token,
         })
       );
-      navigate("/home");
+            navigate("/home");
     }
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
+    console.log('lol2')
     if (isLogin) await login(values, onSubmitProps);
     if (isRegister) await register(values, onSubmitProps);
   };

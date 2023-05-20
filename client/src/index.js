@@ -43,7 +43,7 @@ root.render(
       <App/>
       </PersistGate>
     </Provider>
-    <App />
+    {/* <App /> */}
   </React.StrictMode>
 );
 

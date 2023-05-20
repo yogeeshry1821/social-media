@@ -6,7 +6,7 @@ const initialState={
     posts:[]
 }
 
-export const authSlice=()=>createSlice({
+export const authSlice=createSlice({
     name: "auth",
     initialState:initialState,
     reducers:{
@@ -46,6 +46,6 @@ export const authSlice=()=>createSlice({
 
     }
 })
-
+console.log(authSlice.actions)
 export const {setMode,setLogin,setLogout,setFriends,setPosts,setPost}=authSlice.actions;
-export default authSlice.reducers;
+export default authSlice.reducer;
