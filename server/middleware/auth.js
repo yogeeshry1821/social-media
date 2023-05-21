@@ -6,8 +6,7 @@ export const verifyToken = async(req,res,next)=>{
             res.status(400).send({msg:"Access denied"});
         }
         if(token.startsWith("Bearer")){
-            token=token.slice(7,token.length).trimleft()
-            console.log('token', token)
+            token=token.slice(7,token.length).trimLeft()
         }
 
         const verified=jwt.verify(token,process.env.JWT_SECRET)
