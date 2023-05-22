@@ -23,6 +23,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const patchFriend = async () => {
     const response = await fetch(
       `http://localhost:3001/users/${_id}/${friendId}`,
+      
       {
         method: "PATCH",
         headers: {
@@ -31,6 +32,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
         },
       }
     );
+    console.log(response);
     const data = await response.json();
     dispatch(setFriends({ friends: data }));
   };

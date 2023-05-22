@@ -13,6 +13,16 @@ export const verifyToken = async(req,res,next)=>{
         req.user=verified;
         next();
 
+
+        // jwt.verify(token, accessTokenSecret, (err, user) => {
+        //     if (err) {
+        //         return res.sendStatus(403);
+        //     }
+
+        //     req.user = user;
+        //     next();
+        // });
+
     }
 
     catch(err){
