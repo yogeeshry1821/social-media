@@ -19,10 +19,10 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
   const isFriend = friends.find((friend) => friend._id === friendId);
-
+  const apiUrl = process.env.REACT_APP_API_URL;
   const patchFriend = async () => {
     const response = await fetch(
-      `process.env.REACT_APP_API_URL/users/${_id}/${friendId}`,
+      `${apiUrl}/users/${_id}/${friendId}`,
       
       {
         method: "PATCH",

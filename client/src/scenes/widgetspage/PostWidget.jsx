@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "state";
 import CommentsPage from "../widgetspage/CommentsPage"
+  const apiUrl = process.env.REACT_APP_API_URL;
 const PostWidget = ({
   postId,
   postUserId,
@@ -34,8 +35,9 @@ const PostWidget = ({
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
+
   const patchLike = async () => {
-    const response = await fetch(`process.env.REACT_APP_API_URL/posts/${postId}/like`, {
+    const response = await fetch(`${apiUrl}/posts/${postId}/like`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -64,7 +66,7 @@ const PostWidget = ({
           height="auto"
           alt="post"
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-          src={`process.env.REACT_APP_API_URL/assets/${picturePath}`}
+          src={`${apiUrl}/assets/${picturePath}`}
         />
       )}
       <FlexBetween mt="0.25rem">

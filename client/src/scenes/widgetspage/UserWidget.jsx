@@ -11,7 +11,8 @@ import {
   import { useSelector } from "react-redux";
   import { useEffect, useState } from "react";
   import { useNavigate } from "react-router-dom";
-  
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const UserWidget = ({ userId, picturePath }) => {
     const [user, setUser] = useState(null);
     const { palette } = useTheme();
@@ -22,7 +23,7 @@ import {
     const main = palette.neutral.main;
   
     const getUser = async () => {
-      const response = await fetch(`process.env.REACT_APP_API_URL/users/${userId}`, {
+      const response = await fetch(`${apiUrl}/users/${userId}`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });

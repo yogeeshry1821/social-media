@@ -7,6 +7,7 @@ import FriendListWidget from "scenes/widgetspage/FriendListWidget";
 import MyPostWidget from "scenes/widgetspage/MyPostWidget";
 import PostsWidget from "scenes/widgetspage/PostsWidget";
 import UserWidget from "scenes/widgetspage/UserWidget";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
@@ -15,7 +16,7 @@ const ProfilePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
   const getUser = async () => {
-    const response = await fetch(`process.env.REACT_APP_API_URL/users/${userId}`, {
+    const response = await fetch(`${apiUrl}/users/${userId}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
