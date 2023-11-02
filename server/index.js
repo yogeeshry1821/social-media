@@ -65,5 +65,6 @@ mongoose.connect(process.env.MONGO_URL,{
 }).then(()=>{
     app.listen(PORT,()=>console.log(`listening :${PORT} `))
     // User.insertMany(users);
-    // Post.insertMany(posts);
+    // Post.insertMany(posts);  
+    
 }).catch((e)=>console.log(`${e}did not connect`))

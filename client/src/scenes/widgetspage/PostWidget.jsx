@@ -12,7 +12,7 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "state";
-
+import CommentsPage from "../widgetspage/CommentsPage"
 const PostWidget = ({
   postId,
   postUserId,
@@ -82,6 +82,7 @@ const PostWidget = ({
 
           <FlexBetween gap="0.3rem">
             <IconButton onClick={() => setIsComments(!isComments)}>
+              {/* <CommentsPage/> */}
               <ChatBubbleOutlineOutlined />
             </IconButton>
               <Typography>{comments.length}</Typography> 

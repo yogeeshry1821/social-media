@@ -73,3 +73,10 @@ export const likePost= async (req, res)=>{
         res.status(500).json({message:err.message})
     }
 }
+export const addComment= async(req,res)=>{
+    try{
+        const comment= await Post.findById(postId)
+    }catch (err){
+        res.status(500).json({message:err.message})
+    }
+}
