@@ -18,14 +18,13 @@ import FlexBetween from "components/FlexBetween";
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
+  lastName: yup.string(),
   email: yup.string().email("invalid email").required("required"),
   password: yup.string().required("required"),
-  location: yup.string().required("required"),
-  occupation: yup.string().required("required"),
+  location: yup.string(),
+  occupation: yup.string(),
   picture: yup.string().required("required"),
 });
-
 const loginSchema = yup.object().shape({
   email: yup.string().email("invalid email").required("required"),
   password: yup.string().required("required"),
@@ -55,16 +54,16 @@ const Form = () => {
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
   const apiUrl = process.env.REACT_APP_API_URL;
-
+  const [errorMessage, setErrorMessage] = useState("");
   const register = async (values, onSubmitProps) => {
     // this allows us to send form info with image
-    console.log('lol')
     const formData = new FormData();
     for (let value in values) {
       formData.append(value, values[value]);
     }
-    formData.append("picturePath", values.picture.name);
-
+    if(values.picture){
+      formData.append("picturePath", values.picture.name);
+    }
     const savedUserResponse = await fetch(
       `${apiUrl}/auth/register`,
       {
@@ -81,28 +80,39 @@ const Form = () => {
   };
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch(`${apiUrl}/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values), 
-    });
-    const loggedIn = await loggedInResponse.json();
-    onSubmitProps.resetForm();
-    if (loggedIn) {
-      dispatch(
-        setLogin({
-          user: loggedIn.user,
-          token: loggedIn.token,
-        })
-      );
-            navigate("/home");
+    try {
+      const loggedInResponse = await fetch(`${apiUrl}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+
+      if (!loggedInResponse.ok) {
+        // Handle non-successful response (e.g., invalid credentials)
+        throw new Error("Invalid email or password");
+      }
+
+      const loggedIn = await loggedInResponse.json();
+      console.log("loggedIn", loggedIn);
+      onSubmitProps.resetForm();
+
+      if (loggedIn) {
+        dispatch(
+          setLogin({
+            user: loggedIn.user,
+            token: loggedIn.token,
+          })
+        );
+        navigate("/home");
+      }
+    } catch (error) {
+      setErrorMessage("Invalid email or password");
     }
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
-    console.log('lol2')
-    if (isLogin) await login(values, onSubmitProps);
     if (isRegister) await register(values, onSubmitProps);
+    if (isLogin) await login(values, onSubmitProps);
   };
 
   return (
@@ -122,9 +132,14 @@ const Form = () => {
         resetForm,
       }) => (
         <form onSubmit={handleSubmit}>
+          {errorMessage && (
+            <Typography variant="body2" color="error"gutterBottom>
+              {errorMessage}
+            </Typography>
+          )}
           <Box
             display="grid"
-            gap="30px"
+            gap="40px"
             gridTemplateColumns="repeat(4, minmax(0, 1fr))"
             sx={{
               "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
@@ -198,7 +213,9 @@ const Form = () => {
                       >
                         <input {...getInputProps()} />
                         {!values.picture ? (
-                          <p>Add Picture Here</p>
+                          <Typography variant="body2" color="error">
+                            Upload a Picture (required)
+                          </Typography>
                         ) : (
                           <FlexBetween>
                             <Typography>{values.picture.name}</Typography>
@@ -235,7 +252,6 @@ const Form = () => {
             />
           </Box>
 
-          {/* BUTTONS */}
           <Box>
             <Button
               fullWidth
