@@ -213,8 +213,8 @@ const Form = () => {
                       >
                         <input {...getInputProps()} />
                         {!values.picture ? (
-                          <Typography variant="body2" color="error">
-                            Upload a Picture (required)
+                          <Typography variant="body2" color="black">
+                            Upload a Picture
                           </Typography>
                         ) : (
                           <FlexBetween>
